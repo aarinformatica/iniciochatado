@@ -1,0 +1,154 @@
+/* --- 1. CONFIGURAÇÕES GLOBAIS E VARIÁVEIS --- */
+:root {
+    --bg-gradient: linear-gradient(135deg, #04050d 0%, #070b1e 50%, #03040a 100%);
+    --panel-bg: rgba(255, 255, 255, 0.02);
+    --panel-border: rgba(255, 255, 255, 0.06);
+    --accent-primary: #3b82f6;
+    --accent-glow: rgba(59, 130, 246, 0.4);
+    --text-main: #f3f4f6;
+    --text-muted: #848da4;
+}
+
+@property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: var(--bg-gradient);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    perspective: 1200px;
+}
+
+#particle-canvas {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 1; pointer-events: none;
+}
+
+/* --- 2. PAINEL DE LOGIN (GLASSMORPHISM) --- */
+.login-container {
+    position: relative;
+    z-index: 10;
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    padding: 45px;
+    width: 100%; max-width: 440px;
+    border-radius: 28px;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.08);
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out;
+}
+
+/* Borda Laser Chase */
+.login-container::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 30px;
+    padding: 2px;
+    background: conic-gradient(from var(--angle), #ff2a2a, #2ecc71, #ffffff, #ff7a00, #ff2a2a);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: 5;
+    pointer-events: none;
+    animation: borderChase 4s linear infinite;
+}
+
+@keyframes borderChase { to { --angle: 360deg; } }
+
+/* --- 3. ELEMENTOS DE CABEÇALHO E TÍTULO --- */
+.brand-header { text-align: center; margin-bottom: 35px; transform: translateZ(30px); }
+
+.main-logo-icon {
+    width: 76px; height: 76px; color: #ffffff; margin-bottom: 18px;
+    display: inline-block; filter: drop-shadow(0 0 15px var(--accent-glow));
+    animation: energyPulse 4s ease-in-out infinite; transform-origin: center;
+}
+
+@keyframes energyPulse {
+    0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 15px var(--accent-glow)); }
+    25% { transform: scale(1.05) rotate(-3deg); filter: drop-shadow(0 0 25px var(--accent-primary)) drop-shadow(0 0 10px #ffffff); }
+    50% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 15px var(--accent-glow)); }
+    75% { transform: scale(1.05) rotate(3deg); filter: drop-shadow(0 0 25px var(--accent-primary)) drop-shadow(0 0 10px #ffffff); }
+}
+
+.brand-title {
+    font-size: 38px; font-weight: 800; letter-spacing: 6px; margin-bottom: 10px;
+    display: flex; justify-content: center; align-items: center; gap: 8px;
+}
+
+.brand-title .title-highlight { position: relative; color: #ffffff; text-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
+.brand-title .title-highlight::after {
+    content: attr(data-text); position: absolute; left: 0; top: 0; width: 100%;
+    color: #60a5fa; overflow: hidden; border-bottom: 2px solid #93c5fd;
+    animation: laserScan 3s ease-in-out infinite alternate; filter: drop-shadow(0 0 5px #3b82f6);
+}
+
+@keyframes laserScan { 0% { height: 0%; } 100% { height: 100%; } }
+
+.brand-title .title-suffix { position: relative; color: #334155; opacity: 0.8; }
+.brand-title .title-suffix::before, .brand-title .title-suffix::after {
+    content: attr(data-text); position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: #070b1e;
+}
+.brand-title .title-suffix::before {
+    left: 2px; text-shadow: -1px 0 #ef4444; clip: rect(44px, 450px, 56px, 0);
+    animation: glitchEffect 4s infinite linear alternate-reverse;
+}
+.brand-title .title-suffix::after {
+    left: -2px; text-shadow: -1px 0 #3b82f6; clip: rect(85px, 450px, 140px, 0);
+    animation: glitchEffect2 3s infinite linear alternate-reverse;
+}
+
+@keyframes glitchEffect { 0%, 100% { clip: rect(10px, 9999px, 20px, 0); } 20% { clip: rect(30px, 9999px, 40px, 0); } 40% { clip: rect(75px, 9999px, 80px, 0); } 60% { clip: rect(5px, 9999px, 15px, 0); } 80% { clip: rect(50px, 9999px, 60px, 0); } }
+@keyframes glitchEffect2 { 0%, 100% { clip: rect(60px, 9999px, 70px, 0); } 30% { clip: rect(15px, 9999px, 25px, 0); } 50% { clip: rect(80px, 9999px, 95px, 0); } 70% { clip: rect(40px, 9999px, 55px, 0); } }
+
+.brand-subtitle { font-size: 13px; color: var(--text-muted); }
+
+/* --- 4. FORMULÁRIO E INPUTS --- */
+.input-group { margin-bottom: 24px; text-align: left; transform: translateZ(15px); }
+.input-group label { display: block; color: var(--text-main); font-size: 12px; font-weight: 600; margin-bottom: 8px; letter-spacing: 0.5px; text-transform: uppercase; opacity: 0.8; }
+.input-wrapper { position: relative; display: flex; align-items: center; }
+.input-icon { position: absolute; left: 16px; width: 16px; height: 16px; color: var(--text-muted); transition: color 0.3s; }
+.input-wrapper input { 
+    width: 100%; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--panel-border); 
+    padding: 15px 16px 15px 46px; border-radius: 14px; color: var(--text-main); 
+    font-family: inherit; font-size: 14px; outline: none; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); 
+}
+.input-wrapper input:focus { border-color: var(--accent-primary); background: rgba(0, 0, 0, 0.45); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15); }
+.input-wrapper input:focus ~ .input-icon { color: var(--accent-primary); }
+
+.input-icon.is-typing { color: #2ecc71 !important; animation: pulseGreen 1.5s infinite; }
+@keyframes pulseGreen { 0% { transform: scale(1); filter: drop-shadow(0 0 0px #2ecc71); } 50% { transform: scale(1.2); filter: drop-shadow(0 0 8px #2ecc71); } 100% { transform: scale(1); filter: drop-shadow(0 0 0px #2ecc71); } }
+
+#btn-submit {
+    width: 100%; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    border: none; padding: 16px; border-radius: 14px; color: #fff;
+    font-family: inherit; font-weight: 600; font-size: 15px; cursor: pointer;
+    box-shadow: 0 4px 15px rgba(29, 78, 216, 0.3); transition: all 0.3s; transform: translateZ(20px);
+}
+#btn-submit:hover { transform: translateZ(25px) translateY(-2px); box-shadow: 0 8px 24px rgba(29, 78, 216, 0.45); filter: brightness(1.1); }
+.login-footer { text-align: center; margin-top: 25px; font-size: 11px; color: var(--text-muted); opacity: 0.5; }
+
+/* --- 5. ÁREA DE CHAT (OCULTA INICIALMENTE) --- */
+.app-wrapper {
+    display: none; opacity: 0; position: absolute; z-index: 20;
+    width: 90vw; height: 80vh; background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(20px); border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1); transition: opacity 0.8s ease;
+}
+.sidebar { width: 250px; border-right: 1px solid rgba(255,255,255,0.1); padding: 20px; color: var(--text-main); }
+.chat-area { flex-grow: 1; display: flex; align-items: center; justify-content: center; }
+
+.fade-out { animation: fadeOut 0.5s forwards; }
+@keyframes fadeOut { to { opacity: 0; transform: scale(0.95); } }
