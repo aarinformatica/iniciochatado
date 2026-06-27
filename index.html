@@ -1,0 +1,53 @@
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHATADO - Entrar no Chat</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.ably.com/lib/ably.min-1.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <main class="login-container" id="login-card">
+        <div class="login-content-inner">
+            <header class="brand-header">
+                <svg class="main-logo-icon" viewBox="0 0 1792 1792">
+                    <path fill="currentColor" d="M1216 832q0-148-132-261t-324-113q-192 0-324 113t-132 261q0 95 62 175.5t168 111.5l-2 3.5q0 1 .5 2.5t.5 2.5q0 2-1 6.5t-4 13.5-7 19.5-12.5 26.5-17.5 31.5-22 38.5q-5 8-3.5 14t7.5 8.5q5 2.5 10 2.5 12 0 32-6t44-16.5 50.5-27 50.5-35.5 45.5-42.5l14-13q63 17 130 17 192 0 324-113t132-261zm576 384q0-131-105-233.5t-259-115.5q-3 68-29 133t-75 119.5-115.5 94-150.5 60-178 20.5q48 69 132.5 111t191.5 42q59 0 115-15l12 11.5q27 26.5 40.5 38t44.5 31.5 51 24 44.5 14.5 32 5.5q5 0 9.5-2t6.5-7.5q1.5-5.5 0-11q-12-25-22-38.5t-17.5-31.5-12.5-26.5-7-19.5-4-13.5-1-6.5q1 0 .5-2.5t.5-2.5l-2-3.5q106-31 168-111.5t62-175.5z"/>
+                </svg>
+                <h1 class="brand-title">
+                    <span class="title-highlight" data-text="CHAT">CHAT</span><span class="title-suffix" data-text="ADO">ADO</span>
+                </h1>
+                <p class="brand-subtitle">Conexões instantâneas, conversas descomplicadas.</p>
+            </header>
+
+            <form id="login-form" autocomplete="off">
+                <div class="input-group">
+                    <label for="username">Como quer ser chamado?</label>
+                    <div class="input-wrapper">
+                        <svg class="input-icon" viewBox="0 0 1792 1792"><path fill="currentColor" d="M1536 1399q0 109-62.5 187t-150.5 78h-852q-88 0-150.5-78t-62.5-109q0-85 8.5-160.5t31.5-152 58.5-116.5 91-86.5 130-41q11 12 30 33t46.5 44.5 67 43 78 24 81 6.5 81-6.5 78-24 67-43 46.5-44.5 30-33q69 13 130 41t91 86.5 58.5 116.5 31.5 152 8.5 160.5zm-384-951q0 159-112.5 271.5t-271.5 112.5-271.5-112.5-112.5-271.5 112.5-271.5 271.5-112.5 271.5 112.5 112.5 271.5z"/></svg>
+                        <input type="text" id="username" placeholder="Digite seu apelido..." required maxlength="20">
+                    </div>
+                </div>
+                <button type="submit" id="btn-submit">
+                    <span>Entrar no Fluxo</span>
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <div id="app-wrapper" class="app-wrapper">
+        <aside class="sidebar">
+            <h3 style="color:#fff; margin-bottom: 15px;">Contatos Online</h3>
+            <div class="contact-list"></div>
+        </aside>
+        <section class="chat-area">
+            <div class="chat-box" style="color: white;">Sistema ativo. Aguardando mensagens.</div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
